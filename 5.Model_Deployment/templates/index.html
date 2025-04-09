@@ -1,15 +1,40 @@
 {% extends 'page.html' %} {% block content %}
 <div class="container">
-  <div class="row" id="myDiv">
-    <h1 class="display-1" id="userName">Hello {{value}}</h1>
-  </div>
-  <div class="hidden" id="myDiv1">
-    <h1 class="display-1" id="sessionID">{{value1}}</h1>
-  </div>
   <br />
   <div class="row">
     <h1 class="display2">Enter Your Game Stats</h1>
+  </div>
+  <div class="container">
+  <div class="row">
+    <form action="/index.html" method="POST" class="box">
+      <div class="dropdown">
+      <label for="project">Choose project:</label>
+      <select name="project" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {%for project in projects%}
+        <option value= {{project[0]}}>{{project[0]}}</option>
+        {%endfor%}
+      </select>
+      <br>
+      <br>
+      <div class="col-auto">
+        <label name="popularity" class="form-label">Popularity</label>
+        <input
+          name="title"
+          type="text"
+          class="title"
+          id="title"
+          placeholder="Game Rating"
+        />
 
-    {% endblock %}
+      <br />
+      {{value}}
+      <br>
+      <br>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+      </div>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    </form>
   </div>
 </div>
+{% endblock %}

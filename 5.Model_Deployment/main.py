@@ -10,7 +10,9 @@ import requests
 from flask_wtf import CSRFProtect
 from flask_csp.csp import csp_header
 import random
-import userManagement as dbHandler
+import dataManagement as dbHandler
+import export_import as exporti
+import test_import as testi
 
 
 # Generate a unique basic 16 key: https://acte.ltd/utils/randomkeygen
@@ -30,7 +32,7 @@ limiter = Limiter(
 @app.route("/index.htm", methods=["GET"])
 @app.route("/index.asp", methods=["GET"])
 @app.route("/index.php", methods=["GET"])
-@app.route("/index.html", methods=["GET"])
+@app.route("/index.html", methods=["GET","POST"])
 def root():
     return redirect("/", 302)
 
@@ -58,8 +60,16 @@ def root():
 )
 
 def index():
-    if request.method == 'GET':
-        pass
+    if request.method == "GET":
+        return render_template("/index.html")
+    if request.method == "POST":
+        entry = []
+        popularity = request.form["popularity"]
+        project = request.form["project"]
+        entry.append(popularity)
+        entry.append(project)
+        output = 'output'
+        return render_template("/index.html", value = 'output')
     return render_template("/index.html")
 
 if __name__ == "__main__":
