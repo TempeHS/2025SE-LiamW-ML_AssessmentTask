@@ -10,6 +10,7 @@ import requests
 from flask_wtf import CSRFProtect
 from flask_csp.csp import csp_header
 import random
+import csv
 import logging
 import dataManagement as dbHandler
 import export_import as exporti
@@ -89,6 +90,13 @@ def page():
         for n in glist:
             entry.append(n)
         output = testi.predict(entry)
+        entry.append(output)
+        print(entry)
+        output = f"{output} Global_Sales"
+        with open('model_ready_data.csv', 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(dbHandler.csvReady(entry))
+        csvfile.close()
         return render_template("/index.html", value = output)
     else:
         return render_template("/index.html", value = output)
