@@ -37,7 +37,7 @@ def root():
     return redirect("/", 302)
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/", methods=["GET","POST"])
 @csp_header(
     {
         # Server Side CSP is consistent with meta CSP in layout.html
@@ -59,17 +59,24 @@ def root():
     }
 )
 
+
 def index():
+    print(request.method)
     if request.method == "GET":
         return render_template("/index.html")
     if request.method == "POST":
         entry = []
         popularity = request.form["popularity"]
-        project = request.form["project"]
+        genre = request.form["genre"]
+        year = request.form["year"]
+        if not popularity or not year:
+            render_template("/index.html", value = "doesn't meet criteria")
         entry.append(popularity)
-        entry.append(project)
-        output = 'output'
-        return render_template("/index.html", value = 'output')
+        entry.append(year)
+        glist = dbHandler.findgenre(genre)
+        entry.append(glist)
+        output = testi.predict(entry)
+        return render_template("/index.html", value = output)
     return render_template("/index.html")
 
 if __name__ == "__main__":
