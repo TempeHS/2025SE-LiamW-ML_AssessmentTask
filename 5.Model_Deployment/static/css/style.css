@@ -1,0 +1,58 @@
+* {
+}
+body {
+}
+.container {
+}
+
+.row {
+}
+
+.hidden {
+  display: none;
+}
+
+#logoutspace {
+  margin-right: 20px;
+}
+
+#usertop {
+  width: relative;
+  border: 2px solid grey;
+  padding: 2px;
+}
+
+.display0 {
+  font-family: Arial, Helvetica, serif;
+  font-size: xxx-large;
+  border: 1pc;
+}
+
+.display1 {
+  font-family: Arial, Helvetica, serif;
+  font-size: xx-large;
+}
+
+.display2 {
+  font-family: Arial, Helvetica, serif;
+  font-size: xx-large;
+}
+.display3 {
+  font-family: Arial, Helvetica, serif;
+  font-size: x-large;
+}
+
+.display4 {
+  font-family: Arial, Helvetica, serif;
+  font-size: x-large;
+  border: 1pc;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  padding-bottom: 10pc;
+}
+
+.display5 {
+  font-family: Arial, Helvetica, serif;
+  font-size: medium;
+}

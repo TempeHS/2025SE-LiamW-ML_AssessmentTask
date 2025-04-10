@@ -1,0 +1,59 @@
+{% extends 'page.html' %} {% block content %}
+<div class="container">
+  <br />
+  <div class="row">
+    <h1 class="display2">Enter Your Game Stats</h1>
+  </div>
+  <div class="container">
+  <div class="row">
+    <form action="/page.html" method="POST" class="box">
+      <div class="dropdown">
+      <label for="genre">Choose Your Game's Genre:</label>
+      <select name="genre" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option value= "Action">Action</option>
+        <option value= "Adventure">Adventure</option>
+        <option value= "Fighting">Fighting</option>
+        <option value= "Misc">Misc</option>
+        <option value= "Platform">Platform</option>
+        <option value= "Puzzle">Puzzle</option>
+        <option value= "Racing">Racing</option>
+        <option value= "Role-Playing">Role-Playing</option>
+        <option value= "Shooter">Shooter</option>
+        <option value= "Simulation">Simulation</option>
+        <option value= "Sport">Sport</option>
+        <option value= "Strategy">Strategy</option>
+      </select>
+      <br>
+      <br>
+      <div class="col-auto">
+        <label name="popularity" class="form-label">Popularity</label>
+        <input
+          name="popularity"
+          type="text"
+          class="popularity"
+          id="popularity"
+          placeholder="Game Rating between 0 to 1"
+        />
+        </div>
+      <div class="col-auto">
+        <label name="year" class="form-label">Year</label>
+        <input
+          name="year"
+          type="text"
+          class="year"
+          id="year"
+          placeholder="Year"
+        />
+        </div>
+      <br />
+      {{value}}
+      <br>
+      <br>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+      </div>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    </form>
+  </div>
+</div>
+{% endblock %}
