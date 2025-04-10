@@ -10,10 +10,18 @@ import requests
 from flask_wtf import CSRFProtect
 from flask_csp.csp import csp_header
 import random
+import logging
 import dataManagement as dbHandler
 import export_import as exporti
 import test_import as testi
 
+app_log = logging.getLogger(__name__)
+logging.basicConfig(
+    filename="security_log.log",
+    encoding="utf-8",
+    level=logging.DEBUG,
+    format="%(asctime)s %(message)s",
+)
 
 # Generate a unique basic 16 key: https://acte.ltd/utils/randomkeygen
 app = Flask(__name__)
@@ -59,11 +67,15 @@ def root():
     }
 )
 
-
 def index():
+    return render_template("/index.html")
+
+@app.route("/page.html", methods=["GET","POST"])
+def page():
     print(request.method)
     if request.method == "GET":
-        return render_template("/index.html")
+            if request.method == "GET" and request.args.get("url"):
+                url = request.args.get("url", "")
     if request.method == "POST":
         entry = []
         popularity = request.form["popularity"]
@@ -71,13 +83,21 @@ def index():
         year = request.form["year"]
         if not popularity or not year:
             render_template("/index.html", value = "doesn't meet criteria")
-        entry.append(popularity)
-        entry.append(year)
+        entry.append(float(popularity))
+        entry.append(int(year))
         glist = dbHandler.findgenre(genre)
-        entry.append(glist)
+        for n in glist:
+            entry.append(n)
         output = testi.predict(entry)
         return render_template("/index.html", value = output)
-    return render_template("/index.html")
+    else:
+        return render_template("/index.html", value = output)
+
+@app.route("/csp_report", methods=["POST"])
+@csrf.exempt
+def csp_report():
+    app.logger.critical(request.data.decode())
+    return "done"
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5001)

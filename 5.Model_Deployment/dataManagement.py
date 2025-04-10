@@ -11,7 +11,7 @@ def findgenre(genre):
 
 def popfilter(data):
     try:
-        if not 0 < int(data) < 1:
+        if not 0 < float(data) < 1:
             return False
         return True
     except ValueError:
